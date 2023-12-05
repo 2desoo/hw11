@@ -1,74 +1,37 @@
 public class Main {
 
     public static void main(String[] args) {
-        task1();
-        task2();
-        task3();
-    }
-
-    public static void info(String test) {
-        System.out.println(test);
-    }
-
-    public static void printYearLeap(int year) {
-        info("Task #1");
-        boolean leapYear = (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
-        if (leapYear) {
-            System.out.println(year + (" год является високосным."));
+//        task1();
+//        task2();
+//        task3();
+        Test.task1();
+        Test.task2();
+        Test.task3(101);
+        Person person1 = new Person("Admin", "admin1");
+        Person person2 = new Person("User", "user1");
+        Person person3 = new Person("User", "user2");
+        Message messageP1 = new Message(person1, "Welcome role admin");
+        Message messageP2 = new Message(person2, "Welcome role sys.admin");
+        Message messageP3 = new Message(person3, "Welcome role user player");
+        validDate(messageP2, person1);
+        boolean plover = validDate(messageP3, person3);
+        if (plover) {
+            messageP3.setText("New commend");
+            System.out.println(messageP3);
         } else {
-            System.out.println(year + (" год не является високосным."));
+            System.out.println("He's don't have role");
         }
+        Person man = new Person(15);
+//        ternary operator WARN
+//        https://javarush.com/groups/posts/ternarnyj-operator
+
+//        String securityAnswer = (man.getAge() >= 18) ? "Все в порядке, проходите!" : "Этот фильм не подходит для вашего возраста!";
+        System.out.println((plover) ? "Commend changed" : "Error");
+        System.out.println(messageP3.getText());
+
     }
 
-
-    public static void checkDevice(int clientOs, int clientDeviceYear) {
-        info("Task #2");
-        int iOs = 0;
-        int android = 1;
-        if (clientOs == iOs && clientDeviceYear < 2015) {
-            System.out.println("Установите облегченную версию приложения для iOS по ссылке.");
-        } else if (clientOs == iOs && clientDeviceYear > 2015) {
-            System.out.println("Установите версию приложения для iOS по ссылке.");
-        } else if (clientOs == android && clientDeviceYear < 2015) {
-            System.out.println("Установите облегченную версию приложения для Android по ссылке.");
-        } else if (clientOs == android && clientDeviceYear > 2015) {
-            System.out.println("Установите версию приложения для Android по ссылке.");
-        }
-    }
-
-    public static int checkDeliveryDistance(int a) {
-        info("Task #3");
-        int day = 1;
-        if (a <= 20) {
-            return day;
-        } else if (a > 21 && a <= 60) {
-            return day + 1;
-        } else if (a > 61 && a <= 100) {
-            return day + 2;
-        } else {
-            return -1;
-        }
-    }
-
-    public static void time(int days) {
-        if (days > 0) {
-            info("Доставка займёт " + days + " дня.");
-        } else {
-            info("Доставки нет!");
-        }
-    }
-
-    private static void task1() {
-        printYearLeap(2001);
-    }
-
-    private static void task2() {
-        checkDevice(0, 2013);
-    }
-
-    private static void task3() {
-        int deliveryDistance = 95;
-        int deliveryTime = checkDeliveryDistance(deliveryDistance);
-        time(deliveryTime);
+    public static boolean validDate(Message message, Person person) {
+        return person.getRole().equals("Admin") || message.getPerson().equals(person);
     }
 }
